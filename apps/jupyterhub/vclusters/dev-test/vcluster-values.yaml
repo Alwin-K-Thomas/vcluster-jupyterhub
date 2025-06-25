@@ -2,6 +2,9 @@ controlPlane:
   distro:
     k3s:
       enabled: true
-      image: rancher/k3s:v1.23.10-k3s1
+      image:
+        registry: ""
+        repository: rancher/k3s
+        tag: v1.23.10-k3s1
       extraArgs:
         - --tls-san=localhost
