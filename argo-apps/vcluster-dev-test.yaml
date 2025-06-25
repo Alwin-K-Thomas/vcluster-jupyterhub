@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vcluster-dev-test
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev-test
+  source:
+    repoURL: https://github.com/Alwin-K-Thomas/vcluster-jupyterhub.git
+    path: apps/jupyterhub/vclusters/dev-test
+    targetRevision: HEAD
+    kustomize:
+      enableHelm: true
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
