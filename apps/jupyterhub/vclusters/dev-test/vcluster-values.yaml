@@ -1,0 +1,11 @@
+sync:
+  ingresses:
+    enabled: true
+expose:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    host: dev-test.local
+controlPlane:
+  replicas: 1
+kubeConfigContextName: dev-test
