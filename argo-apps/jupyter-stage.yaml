@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: jupyer-stage
+  name: jupyterhub-stage
   namespace: argocd
 spec:
-  source:
-    repoURL:
-    path: apps/jupyterhub/overlays/stage
-    targetRevision: HEAD
-    helm:
-      valueFiles:
-        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: stage
+  source:
+    repoURL: https://github.com/Alwin-K-Thomas/vcluster-jupyterhub.git
+    chart: jupyterhub
+    targetRevision: 3.3.7
+    helm:
+      valueFiles:
+        - apps/jupyterhub/overlays/stage/values.yaml
   syncPolicy:
     automated:
       selfHeal: true

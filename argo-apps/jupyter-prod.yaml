@@ -1,20 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: jupyer-prod
+  name: jupyterhub-prod
   namespace: argocd
 spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod
   source:
-    repoURL:
-    path: apps/jupyterhub/overlays/prod
-    targetRevision: HEAD
+    repoURL: https://github.com/Alwin-K-Thomas/vcluster-jupyterhub.git
+    chart: jupyterhub
+    targetRevision: 3.3.7
     helm:
       valueFiles:
-        - values.yaml
+        - apps/jupyterhub/overlays/prod/values.yaml
   syncPolicy:
     automated:
       selfHeal: true
       prune: true
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: prod
