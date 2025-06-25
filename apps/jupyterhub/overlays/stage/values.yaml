@@ -1,0 +1,29 @@
+hub:
+  replicaCount: 1
+  config:
+    Authenticator:
+      admin_users:
+        - stageadmin
+  extraEnv:
+    - name: JUPYTERHUB_CRYPT_KEY
+      valueFrom:
+        secretKeyRef:
+          name: vault-injected
+          key: proxy-secret
+
+proxy:
+  secretToken: ""
+  secretTokenFile: /vault/secrets/proxy-secret
+
+singleuser:
+  memory:
+    guarantee: 512M
+    limit: 1G
+  cpu:
+    guarantee: 0.2
+    limit: 0.5
+
+extraAnnotations:
+  vault.hashicorp.com/agent-inject: "true"
+  vault.hashicorp.com/role: "jupyterhub"
+  vault.hashicorp.com/agent-inject-secret-proxy-secret: "secret/jupyterhub"

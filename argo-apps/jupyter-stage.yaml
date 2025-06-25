@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jupyer-stage
+  namespace: argocd
+spec:
+  source:
+    repoURL:
+    path: apps/jupyterhub/overlays/stage
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: stage
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
